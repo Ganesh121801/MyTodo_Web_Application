@@ -1,22 +1,22 @@
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate , Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigateTo = useNavigate();
+
+  // Directly hardcoding the backend URL
+  const BASE_URL = "https://mytodo-web-application-wmw4.onrender.com";
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4001/user/login",
-        {
-          email,
-          password,
-        },
+        `${BASE_URL}/user/login`,
+        { email, password },
         {
           withCredentials: true,
           headers: {
@@ -25,7 +25,7 @@ function Login() {
         }
       );
       console.log(data);
-      toast.success(data.message || "User loggedin successfully");
+      toast.success(data.message || "User logged in successfully");
       console.log("Navigating to /");
       window.location.href = "/";
       localStorage.setItem("jwt", data.token);
@@ -33,7 +33,9 @@ function Login() {
       setPassword("");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.errors || "User Login failed");
+      toast.error(
+        error.response?.data?.errors || "User Login failed"
+      );
     }
   };
 
@@ -44,7 +46,7 @@ function Login() {
           <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold mb-5 text-center">Login</h2>
             <form onSubmit={handleRegister}>
-              {/* email */}
+              {/* Email */}
               <div className="mb-4">
                 <label className="block mb-2 font-semibold" htmlFor="">
                   Email
@@ -57,7 +59,7 @@ function Login() {
                   placeholder="Type Email"
                 />
               </div>
-              {/* password */}
+              {/* Password */}
               <div className="mb-4">
                 <label className="block mb-2 font-semibold" htmlFor="">
                   Password
@@ -67,7 +69,7 @@ function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Type Username"
+                  placeholder="Type Password"
                 />
               </div>
 

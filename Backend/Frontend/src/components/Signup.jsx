@@ -13,7 +13,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        'http://localhost:4001/user/signup',
+        'https://mytodo-web-application-wmw4.onrender.com/user/signup', // Deployed URL
         { username, email, password },
         {
           withCredentials: true,
@@ -25,14 +25,13 @@ const Signup = () => {
       console.log(data);
       toast.success('User registered successfully');
       navigateTo('/login');
-      localStorage.setItem("jwt" , data.token)
+      localStorage.setItem("jwt", data.token);
       setUsername('');
       setEmail('');
       setPassword('');
-      
     } catch (error) {
       console.log(error);
-      toast.error( error.response.data.errors ||'Error during registration');
+      toast.error(error.response?.data?.errors || 'Error during registration');
     }
   };
 
