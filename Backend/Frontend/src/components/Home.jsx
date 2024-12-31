@@ -11,7 +11,7 @@ const Home = () => {
   const navigateTo = useNavigate();
 
   // Replace with your deployed backend URL
-  const BASE_URL = "https://your-backend-app.onrender.com";
+  const BASE_URL = "https://mytodo-web-application-wmw4.onrender.com";
 
   useEffect(() => {
     const fetchTodos = async () => {
