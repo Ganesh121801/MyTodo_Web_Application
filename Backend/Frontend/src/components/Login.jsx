@@ -27,7 +27,7 @@ function Login() {
       console.log(data);
       toast.success(data.message || "User loggedin successfully");
       console.log("Navigating to /");
-      navigateTo("/");
+      window.location.href = "/";
       localStorage.setItem("jwt", data.token);
       setEmail("");
       setPassword("");

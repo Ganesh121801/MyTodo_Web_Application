@@ -5,6 +5,7 @@ import todoRoute from "./routes/todo.route.js";
 import userRoute from "./routes/user.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser"
+import path from "path";
 
 const app = express();
 
@@ -38,6 +39,15 @@ try {
 //routes about todo tasks
 app.use("/todo", todoRoute);
 app.use("/user", userRoute);
+
+// code for deployment 
+if (process.env.NODE_ENV === 'production') {
+  const dirPath = path.resolve();
+  app.use(express.static(path.join(dirPath, 'Frontend', 'dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(dirPath, 'Frontend', 'dist', 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`The Application is running on port ${PORT} `);
